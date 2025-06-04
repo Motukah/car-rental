@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SwiftRide - Premium Taxi Service</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* CSS Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Variables */
+        :root {
+            --primary: #ff5722;
+            --secondary: #2196f3;
+            --dark: #212121;
+            --light: #f5f5f5;
+            --success: #4caf50;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .logo span {
+            color: var(--secondary);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 30px;
+        }
+
+        nav ul li a {
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            bottom: -5px;
+            left: 0;
+            transition: width 0.3s ease;
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        .nav-btn {
+            background-color: var(--primary);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background-color: #e64a19;
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1502877338535-766e1452684a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
+            color: white;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            animation: animate 1s ease-in-out  1 forwards;
+        }
+
+        .hero h2 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            animation: animate 1s ease-in-out 0.3s 1 forwards;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            animation: animate 1s ease-in-out 0.3s 1 forwards;
+        }
+
+        .hero-btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            margin: 0 10px;
+        }
+
+        .hero-btn.secondary {
+            background-color: transparent;
+            border: 2px solid white;
+        }
+
+        .hero-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        @keyframes animate{
+  from{
+      opacity: 0;
+      transform: translate(0, 100px);
+      filter: blur(33px);
+  }
+  to{
+    opacity: 1;
+    transform: translate(0);
+    filter: blur(0);
+  }
+        }
+        /* Booking Form */
+        .booking-form {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+        }
+
+        .form-title {
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--dark);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 20px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        .submit-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 15px;
+            width: 100%;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background-color: #e64a19;
+            transform: translateY(-2px);
+        }
+
+        /* Services Section */
+        .services {
+            padding: 100px 5%;
+            background-color: white;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--dark);
+            margin-bottom: 15px;
+        }
+
+        .section-title p {
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .service-card {
+            background-color: var(--light);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .service-img {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .service-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .service-card:hover .service-img img {
+            transform: scale(1.1);
+        }
+
+        .service-content {
+            padding: 25px;
+        }
+
+        .service-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .service-content p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .service-price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .service-btn {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .service-btn:hover {
+            background-color: #1976d2;
+        }
+
+        /* Fleet Section */
+        .fleet {
+            padding: 100px 5%;
+            background-color: var(--light);
+        }
+
+        .fleet-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .vehicle-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .vehicle-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .vehicle-img {
+            height: 180px;
+            overflow: hidden;
+        }
+
+        .vehicle-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .vehicle-card:hover .vehicle-img img {
+            transform: scale(1.1);
+        }
+
+        .vehicle-content {
+            padding: 20px;
+        }
+
+        .vehicle-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .vehicle-specs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .spec-item {
+            display: flex;
+            align-items: center;
+            color: #666;
+        }
+
+        .spec-item i {
+            margin-right: 5px;
+            color: var(--primary);
+        }
+
+        .vehicle-price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        /* App Section */
+        .app-section {
+            padding: 100px 5%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .app-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .app-content {
+            flex: 1;
+            min-width: 300px;
+            text-align: left;
+            padding: 20px;
+        }
+
+        .app-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .app-content p {
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+
+        .app-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .app-btn {
+            display: flex;
+            align-items: center;
+            background-color: white;
+            color: var(--dark);
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .app-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .app-btn i {
+            font-size: 2rem;
+            margin-right: 10px;
+            color: var(--primary);
+        }
+
+        .app-btn-text small {
+            display: block;
+            font-size: 0.7rem;
+            font-weight: 400;
+        }
+
+        .app-image {
+            flex: 1;
+            min-width: 300px;
+            padding: 20px;
+        }
+
+        .app-image img {
+            max-width: 100%;
+            filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3));
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 100px 5%;
+            background-color: white;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .testimonial-card {
+            background-color: var(--light);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .testimonial-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .testimonial-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 15px;
+        }
+
+        .testimonial-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .testimonial-user h4 {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+        .testimonial-user p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .testimonial-rating {
+            color: #ffc107;
+            margin-bottom: 15px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 80px 5% 30px;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+        }
+
+        .footer-col h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 3px;
+            background-color: var(--primary);
+            bottom: 0;
+            left: 0;
+        }
+
+        .footer-col p {
+            margin-bottom: 15px;
+            color: #bbb;
+        }
+
+        .footer-links li {
+            list-style: none;
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #bbb;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: #333;
+            border-radius: 50%;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            margin-top: 30px;
+            border-top: 1px solid #333;
+            color: #bbb;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                padding: 1rem;
+            }
+
+            nav ul {
+                margin-top: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            nav ul li {
+                margin: 5px 10px;
+            }
+
+            .hero h2 {
+                font-size: 2.5rem;
+            }
+
+            .hero-buttons {
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .hero-btn {
+                margin: 5px 0;
+            }
+
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+
+            .app-container {
+                flex-direction: column;
+            }
+
+            .app-content {
+                text-align: center;
+                margin-bottom: 30px;
+            }
+
+            .app-buttons {
+                justify-content: center;
+            }
+        }
+
+        /* Booking Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            padding: 30px;
+            position: relative;
+            animation: modalOpen 0.4s ease;
+        }
+
+        @keyframes modalOpen {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+            transition: color 0.3s ease;
+        }
+
+        .close-modal:hover {
+            color: var(--primary);
+        }
+
+        .modal-title {
+            text-align: center;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        /* Success Message */
+        .success-message {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            background-color: var(--success);
+            color: white;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <img src="https://via.placeholder.com/40x40" alt="SwiftRide Logo">
+                <h1>Swift<span>Ride</span></h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#fleet">Our Fleet</a></li>
+                    <li><a href="#app">Mobile App</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#" class="nav-btn" id="bookNowBtn">Book Now</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Premium Taxi Service in Your City</h2>
+            <p>Safe, reliable, and comfortable rides at competitive prices. Book your ride in seconds with our easy-to-use app or website.</p>
+            <div class="hero-buttons">
+                <a href="#" class="hero-btn" id="heroBookBtn">Book a Ride</a>
+                <a href="#app" class="hero-btn secondary">Download App</a>
+            </div>
+            
+            <!-- Booking Form in Hero -->
+            <div class="booking-form" id="bookingForm" style="display: none;">
+                <h3 class="form-title">Book Your Ride</h3>
+                <div class="success-message" id="successMessage">
+                    <i class="fas fa-check-circle"></i> Your booking has been received! We'll contact you shortly.
+                </div>
+                <form id="rideForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="pickup">Pickup Location</label>
+                            <input type="text" id="pickup" class="form-control" placeholder="Enter pickup address" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="destination">Destination</label>
+                            <input type="text" id="destination" class="form-control" placeholder="Enter destination" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="date">Date</label>
+                            <input type="date" id="date" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="time">Time</label>
+                            <input type="time" id="time" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="vehicle">Vehicle Type</label>
+                        <select id="vehicle" class="form-control" required>
+                            <option value="">Select vehicle</option>
+                            <option value="standard">Standard (4 seats)</option>
+                            <option value="xl">XL (6 seats)</option>
+                            <option value="premium">Premium Sedan</option>
+                            <option value="suv">SUV</option>
+                            <option value="luxury">Luxury</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Your Name</label>
+                        <input type="text" id="name" class="form-control" placeholder="Enter your name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" class="form-control" placeholder="Enter phone number" required>
+                    </div>
+                    <button type="submit" class="submit-btn">Confirm Booking</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="section-title">
+            <h2>Our Services</h2>
+            <p>We offer a variety of transportation solutions to meet your specific needs</p>
+        </div>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-img">
+                    <img src="https://images.unsplash.com/photo-1558981806-ec527fa84c39?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Airport Transfer">
+                </div>
+                <div class="service-content">
+                    <h3>Airport Transfers</h3>
+                    <p>Reliable transportation to and from all major airports with flight tracking.</p>
+                    <div class="service-price">From $35</div>
+                    <a href="#" class="service-btn">Book Now</a>
+                </div>
+            </div>
+            <div class="service-card">
+                <div class="service-img">
+                    <img src="https://images.unsplash.com/photo-1506802913710-40e2e66339c9?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="City Rides">
+                </div>
+                <div class="service-content">
+                    <h3>City Rides</h3>
+                    <p>Quick and comfortable transportation within the city at affordable rates.</p>
+                    <div class="service-price">From $15</div>
+                    <a href="#" class="service-btn">Book Now</a>
+                </div>
+            </div>
+            <div class="service-card">
+                <div class="service-img">
+                    <img src="https://images.unsplash.com/photo-1493238792000-8113da705763?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Corporate Service">
+                </div>
+                <div class="service-content">
+                    <h3>Corporate Service</h3>
+                    <p>Professional transportation for business meetings and corporate events.</p>
+                    <div class="service-price">From $50/hour</div>
+                    <a href="#" class="service-btn">Book Now</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fleet Section -->
+    <section class="fleet" id="fleet">
+        <div class="section-title">
+            <h2>Our Fleet</h2>
+            <p>Modern, well-maintained vehicles for every need and occasion</p>
+        </div>
+        <div class="fleet-grid">
+            <div class="vehicle-card">
+                <div class="vehicle-img">
+                    <img src="https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Standard Sedan">
+                </div>
+                <div class="vehicle-content">
+                    <h3>Standard Sedan</h3>
+                    <div class="vehicle-specs">
+                        <div class="spec-item"><i class="fas fa-user-friends"></i> 4 seats</div>
+                        <div class="spec-item"><i class="fas fa-suitcase"></i> 3 bags</div>
+                    </div>
+                    <div class="vehicle-price">$2.50/mile</div>
+                    <a href="#" class="service-btn">Choose Vehicle</a>
+                </div>
+            </div>
+            <div class="vehicle-card">
+                <div class="vehicle-img">
+                    <img src="https://images.unsplash.com/photo-1544636331-e26879cd4d9b?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="XL Vehicle">
+                </div>
+                <div class="vehicle-content">
+                    <h3>XL Vehicle</h3>
+                    <div class="vehicle-specs">
+                        <div class="spec-item"><i class="fas fa-user-friends"></i> 6 seats</div>
+                        <div class="spec-item"><i class="fas fa-suitcase"></i> 6 bags</div>
+                    </div>
+                    <div class="vehicle-price">$3.50/mile</div>
+                    <a href="#" class="service-btn">Choose Vehicle</a>
+                </div>
+            </div>
+            <div class="vehicle-card">
+                <div class="vehicle-img">
+                    <img src="https://images.unsplash.com/photo-1494976351278-20cf4a33d65b?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Premium Sedan">
+                </div>
+                <div class="vehicle-content">
+                    <h3>Premium Sedan</h3>
+                    <div class="vehicle-specs">
+                        <div class="spec-item"><i class="fas fa-user-friends"></i> 4 seats</div>
+                        <div class="spec-item"><i class="fas fa-suitcase"></i> 3 bags</div>
+                    </div>
+                    <div class="vehicle-price">$4.00/mile</div>
+                    <a href="#" class="service-btn">Choose Vehicle</a>
+                </div>
+            </div>
+            <div class="vehicle-card">
+                <div class="vehicle-img">
+                    <img src="https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Luxury Vehicle">
+                </div>
+                <div class="vehicle-content">
+                    <h3>Luxury Vehicle</h3>
+                    <div class="vehicle-specs">
+                        <div class="spec-item"><i class="fas fa-user-friends"></i> 4 seats</div>
+                        <div class="spec-item"><i class="fas fa-suitcase"></i> 4 bags</div>
+                    </div>
+                    <div class="vehicle-price">$6.00/mile</div>
+                    <a href="#" class="service-btn">Choose Vehicle</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- App Section -->
+    <section class="app-section" id="app">
+        <div class="app-container">
+            <div class="app-content">
+                <h2>Download Our Mobile App</h2>
+                <p>Book rides, track your driver in real-time, get fare estimates, and pay seamlessly - all from your smartphone. Available for iOS and Android devices.</p>
+                <div class="app-buttons">
+                    <a href="#" class="app-btn">
+                        <i class="fab fa-apple"></i>
+                        <div class="app-btn-text">
+                            <small>Download on the</small>
+                            <div>App Store</div>
+                        </div>
+                    </a>
+                    <a href="#" class="app-btn">
+                        <i class="fab fa-google-play"></i>
+                        <div class="app-btn-text">
+                            <small>Get it on</small>
+                            <div>Google Play</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="app-image">
+                <img src="https://via.placeholder.com/400x600" alt="Mobile App Screenshot">
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <div class="section-title">
+            <h2>What Our Customers Say</h2>
+            <p>Don't just take our word for it - hear from our satisfied customers</p>
+        </div>
+        <div class="testimonials-grid">
+            <div class="testimonial-card">
+                <div class="testimonial-header">
+                    <div class="testimonial-img">
+                        <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Sarah J.">
+                    </div>
+                    <div class="testimonial-user">
+                        <h4>Sarah J.</h4>
+                        <p>Regular Customer</p>
+                    </div>
+                </div>
+                <div class="testimonial-rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p>"I use SwiftRide for my daily commute to work. The drivers are always professional and the cars are spotless. Highly recommend!"</p>
+            </div>
+            <div class="testimonial-card">
+                <div class="testimonial-header">
+                    <div class="testimonial-img">
+                        <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Michael T.">
+                    </div>
+                    <div class="testimonial-user">
+                        <h4>Michael T.</h4>
+                        <p>Business Traveler</p>
+                    </div>
+                </div>
+                <div class="testimonial-rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p>"As someone who travels frequently for work, I appreciate the reliability of SwiftRide. Their airport transfer service is exceptional."</p>
+            </div>
+            <div class="testimonial-card">
+                <div class="testimonial-header">
+                    <div class="testimonial-img">
+                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Emily R.">
+                    </div>
+                    <div class="testimonial-user">
+                        <h4>Emily R.</h4>
+                        <p>First-time User</p>
+                    </div>
+                </div>
+                <div class="testimonial-rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                </div>
+                <p>"I was visiting the city and needed a ride late at night. The driver arrived early and got me to my destination safely. Great service!"</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3>About SwiftRide</h3>
+                <p>Providing premium taxi services since 2010. We're committed to offering safe, reliable, and comfortable transportation solutions.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#fleet">Our Fleet</a></li>
+                    <li><a href="#app">Mobile App</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Services</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Airport Transfers</a></li>
+                    <li><a href="#">City Rides</a></li>
+                    <li><a href="#">Corporate Service</a></li>
+                    <li><a href="#">Event Transportation</a></li>
+                    <li><a href="#">Hourly Service</a></li>
+                    <li><a href="#">Long Distance</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Contact Us</h3>
+                <p><i class="fas fa-map-marker-alt"></i> 123 Taxi Street, Cityville</p>
+                <p><i class="fas fa-phone"></i> (555) 123-4567</p>
+                <p><i class="fas fa-envelope"></i> info@swiftride.com</p>
+                <p><i class="fas fa-clock"></i> 24/7 Service</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 SwiftRide Taxi Service. All Rights Reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+        </div>
+    </footer>
+
+   
